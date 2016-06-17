@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.external-png-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-png-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-svg-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.4.5.min.css" />
+    <!--<link rel="stylesheet" type="text/css" href="css/supersonic.css" />-->
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <title>Min Moava</title>
+</head>
+
+<body>
+<!-- News -->
+<div data-role="page" id="news">
+    <div data-role="header" data-position="fixed">
+        <h1>Nyheter</h1>
+        <!--<a href="index.html" data-icon="gear" class="ui-btn-right ui-btn-icon-notext">Innstillinger</a>-->
+        <a href="#settings" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-icon-gear ui-btn-icon-notext" data-rel="dialog">Innstillinger</a>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="contFirstArticle"><h3 style="margin:20px;">Klikk Valg øverst til høyre for å velge hvilke nyheter du vil lese</h3></div>
+        <div id="contArticleList"></div>
+        <div id="myLog"></div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed" data-iconpos="bottom" data-id="foo1">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#news" data-icon="home" class="ui-btn-active ui-state-persist">Artikler</a></li>
+                <li><a href="#calendar" data-icon="calendar"  data-prefetch="true">Kalender</a></li>
+                <li><a href="#files" data-icon="bars">Filer</a></li>
+                <li><a href="#info" data-icon="comment">Info</a><span class="badge"></span></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page -->
+
+
+<!--Calendar-->
+<div data-role="page" id="calendar">
+    <div data-role="header" data-position="fixed">
+        <h1>Kalender</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="contEvents">Ingen hendelser ... Se evt. Valg</div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed" data-iconpos="bottom" data-id="foo1">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#news" data-icon="home">Artikler</a></li>
+                <li><a href="#calendar" data-icon="calendar" class="ui-btn-active ui-state-persist">Kalender</a></li>
+                <li><a href="#files" data-icon="bars">Filer</a></li>
+                <li><a href="#info" data-icon="comment">Info</a><span class="badge"></span></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /calendar page -->
+
+
+<!--Files-->
+<div data-role="page" id="files">
+    <div data-role="header" data-position="fixed">
+        <h1>Kalender</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="contFileList">Ingen filer... </div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed" data-iconpos="bottom" data-id="foo1">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#news" data-icon="home">Artikler</a></li>
+                <li><a href="#calendar" data-icon="calendar" >Kalender</a></li>
+                <li><a href="#files" data-icon="bars" class="ui-btn-active ui-state-persist">Filer</a><span class="badge"></span></li>
+                <li><a href="#info" data-icon="comment">Info</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /files page -->
+
+
+
+<!--Info-->
+<div data-role="page" id="info">
+    <div data-role="header" data-position="fixed">
+        <h1>Informasjon</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="contMessages" class="padding"></div>
+        <div id="contArticle" class="padding"></div>
+        <div id="contImg" style="width:100%;padding:0;margin:0;"></div>
+        <div id="contFiles"></div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed" data-iconpos="bottom" data-id="foo1">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#news" data-icon="home">Artikler</a></li>
+                <li><a href="#calendar" data-icon="calendar" >Kalender</a></li>
+                <li><a href="#files" data-icon="bars" >Filer</a></li>
+                <li><a href="#info" data-icon="comment" class="ui-btn-active ui-state-persist">Info</a><span class="badge"></span></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /calendar page -->
+
+
+<!--Settings-->
+<div data-role="page" id="settings">
+    <div data-role="header" data-position="fixed">
+        <h1>Innstillinger</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="contSites" class="padding"></div>
+        <div id="contLogIn"></div>
+        <div id="feedbackLogin"></div>
+        <div id="contSettings" class="padding"></div>
+
+        <button class="button button-block button-positive btnFinish" >Ferdig</button>
+
+    </div><!-- /content -->
+
+</div><!-- /settings page -->
+
+<!--Dynamic content page-->
+<div data-role="page" id="dynamic">
+    <div data-role="header"   data-position="fixed"><a href="#" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">Tilbake</a>
+        <h1>Les mer</h1>
+    </div><!-- /header -->
+    <div data-role="content">
+        <div id="contDynamic">Some dynamic content comming here ...</div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize({page:'article'});
+    </script>
+</body>
+
+</html>
