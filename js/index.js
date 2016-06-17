@@ -54,7 +54,7 @@ var app = {
         StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
-        Push.setupPush();
+     //   Push.setupPush();
         app.initStartPage();
     },
 
@@ -1793,7 +1793,7 @@ var Info = {
 var Push = {
 
     setupPush: function() {
-return;
+
         console.log('calling push init');
         var push = PushNotification.init({
             "android": {
