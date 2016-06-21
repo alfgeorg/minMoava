@@ -56,6 +56,7 @@ var app = {
         //Push
      //   Push.setupPush();
         app.initStartPage();
+
     },
 
     // Things to do with DOM
