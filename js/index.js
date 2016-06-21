@@ -18,7 +18,8 @@
  */
 var app = {
     page:false,
-    
+
+
     // Application Constructor
     initialize: function(obj) {
         app.page = obj.page;
@@ -51,8 +52,9 @@ var app = {
     //things to do for the device
     onDeviceReady: function() {
         alert("Device ready");
-        StatusBar.overlaysWebView(false);
-        StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
+        //This gives eror in build
+      //  StatusBar.overlaysWebView(false);
+      //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
      //   Push.setupPush();
