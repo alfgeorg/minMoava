@@ -66,7 +66,7 @@ var app = {
         Files.init();
         Settings.init();
         Info.init();
-        
+
 
     }
 };
@@ -443,7 +443,7 @@ var Settings = {
     },
 
     getSites: function() {
-        var c = '';
+        var c = 'GET SITES';
         //This url will be changed to a common place for all sites
         $.post( "http://trunk.moava.no/moavaapi/settings", function( data ) {
 
