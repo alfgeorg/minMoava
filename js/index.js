@@ -51,7 +51,7 @@ var app = {
 
     //things to do for the device
     onDeviceReady: function() {
-        alert("Device ready");
+
         //This gives eror in build
       //  StatusBar.overlaysWebView(false);
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
@@ -64,7 +64,7 @@ var app = {
 
     // Things to do with DOM
     initStartPage: function() {
-        alert("init Start page");
+
         Index.init();
         Cal.init();
         Files.init();
@@ -447,11 +447,11 @@ var Settings = {
     },
 
     getSites: function() {
-        alert("GetSites");
+
         var c = 'GET SITES';
         //This url will be changed to a common place for all sites
         $.post( "http://trunk.moava.no/moavaapi/settings", function( data ) {
-            alert("Got Sites: "+data);
+
 
             c += '<form id="formSites">';
             c +=  Settings.listSelectSite( data.site);
