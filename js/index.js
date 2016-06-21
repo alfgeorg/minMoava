@@ -443,10 +443,11 @@ var Settings = {
     },
 
     getSites: function() {
+        alert("GetSites");
         var c = 'GET SITES';
         //This url will be changed to a common place for all sites
         $.post( "http://trunk.moava.no/moavaapi/settings", function( data ) {
-
+            alert("Got Sites: "+data);
 
             c += '<form id="formSites">';
             c +=  Settings.listSelectSite( data.site);
