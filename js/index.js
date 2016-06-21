@@ -66,6 +66,7 @@ var app = {
         Files.init();
         Settings.init();
         Info.init();
+        
 
     }
 };
