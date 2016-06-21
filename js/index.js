@@ -50,6 +50,7 @@ var app = {
 
     //things to do for the device
     onDeviceReady: function() {
+        alert("Device ready");
         StatusBar.overlaysWebView(false);
         StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
@@ -61,6 +62,7 @@ var app = {
 
     // Things to do with DOM
     initStartPage: function() {
+        alert("init Start page");
         Index.init();
         Cal.init();
         Files.init();
