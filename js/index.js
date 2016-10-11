@@ -1821,6 +1821,7 @@ alert("SETUP PUSH")
          */
         push.on('registration', function(data) {
             alert("REIGSTRATION DEVICE ID: " + data.registrationId);
+            $("#myLog").append('<p>DEVICE ID: '+ data.registrationId+'</p>');
             console.log('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
@@ -1867,6 +1868,7 @@ alert("SETUP PUSH")
                     localStorage.setItem('endpointArn', data[0].endpointArn);
                     console.log(data);
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
+                    alert(data);
                 },
                 dataType: 'json'
             });
