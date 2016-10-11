@@ -57,7 +57,7 @@ var app = {
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
-     //   Push.setupPush();
+        Push.setupPush();
         app.initStartPage();
 
     },
@@ -1800,11 +1800,11 @@ var Info = {
 var Push = {
 
     setupPush: function() {
-
+alert("SETUP PUSH")
         console.log('calling push init');
         var push = PushNotification.init({
             "android": {
-                "senderID": "XXXXXXXX"
+                "senderID": "742481540214"
             },
             "ios": {
                 "sound": true,
@@ -1820,6 +1820,7 @@ var Push = {
          * data.registrationId
          */
         push.on('registration', function(data) {
+            alert("REIGSTRATION DEVICE ID: " + data.registrationId);
             console.log('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
