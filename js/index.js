@@ -1864,9 +1864,7 @@ var Push = {
 
                     }
                     localStorage.setItem('endpointArn', data[0].endpointArn);
-
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
-
                 },
                 dataType: 'json'
             });
