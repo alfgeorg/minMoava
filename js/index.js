@@ -413,18 +413,24 @@ var Settings = {
 
         //Finish - Save settings and close initial view
         $(".btnFinish").on("click", function() {
-            if(Settings.site != '') {
-                Settings.saveSettings('art');
-                Settings.saveSettings('file');
-                Settings.saveSettings('cal');
-                //register device
-             //   Push.initRegistration();
+            if($(".chbSetting:checked").length == 0) {
+                alert("Du må velge minst et felt");
+                return;
+            }
+            else {
+                if (Settings.site != '') {
+                    Settings.saveSettings('art');
+                    Settings.saveSettings('file');
+                    Settings.saveSettings('cal');
+                    //register device
+                    Push.setupPush();
 
-                //save settings
+                    //save settings
 
-                //close modal
-                location.reload();
-                //$('.ui-dialog').dialog('close');
+                    //close modal
+                    //  location.reload();
+                    //$('.ui-dialog').dialog('close');
+                }
             }
         });
 
@@ -767,7 +773,8 @@ var Settings = {
         });
 
         localStorage.setItem(what, JSON.stringify(selected));
-        //  $("#myLog").append(JSON.stringify(selected));
+          $("#myLog").append(JSON.stringify(selected));
+
     },
 
     listColorSelect: function(cal) {
@@ -1839,11 +1846,9 @@ var Push = {
             }
             //get all fields
             var fields = '';
-            $(".chbSetting").each(function(index, setting){
-                if($(setting).is(':checked'))
-                {
+            alert("Checkbox fields: "+ $(".chbSetting").length);
+            $(".chbSetting:checked").each(function(index, setting){
                     fields += '&fields[]=' + $(setting).val();
-                }
             });
             //Are we logged in?
             var user = 0;
@@ -1851,7 +1856,7 @@ var Push = {
             {
                 user = localStorage.getItem('user');
             }
-            alert(Settings.site + '/moavaapi/pushregister/' + data.registrationId);
+            alert('DATA: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
@@ -1865,6 +1870,10 @@ var Push = {
                     }
                     localStorage.setItem('endpointArn', data[0].endpointArn);
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
+                    //if we have set fields, we reload with new settings
+                    if(fields != '') {
+                        location.reload();
+                    }
                 },
                 dataType: 'json'
             });
