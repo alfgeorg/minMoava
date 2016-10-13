@@ -1800,7 +1800,6 @@ var Info = {
 var Push = {
 
     setupPush: function() {
-alert("SETUP PUSH")
         console.log('calling push init');
         var push = PushNotification.init({
             "android": {
@@ -1820,7 +1819,6 @@ alert("SETUP PUSH")
          * data.registrationId
          */
         push.on('registration', function(data) {
-            alert("REIGSTRATION DEVICE ID: " + data.registrationId);
             $("#myLog").append('<p>DEVICE ID: '+ data.registrationId+'</p>');
             console.log('registration event: ' + data.registrationId);
 
@@ -1853,22 +1851,22 @@ alert("SETUP PUSH")
             {
                 user = localStorage.getItem('user');
             }
-            console.log(Settings.site + '/moavaapi/pushregister/' + data.registrationId);
+            alert(Settings.site + '/moavaapi/pushregister/' + data.registrationId);
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
                 data: 'endpointArn=' + currentEndpointArn + fields + '&user=' + user,
                 success: function(data) {
-
+                    alert('Got EndpointArn: '+data[0].endpointArn);
                     if(localStorage.getItem('endpointArn'))
                     {
                         localStorage.removeItem('endpointArn');
 
                     }
                     localStorage.setItem('endpointArn', data[0].endpointArn);
-                    console.log(data);
+
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
-                    alert(data);
+
                 },
                 dataType: 'json'
             });
