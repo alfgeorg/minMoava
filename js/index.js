@@ -1577,11 +1577,10 @@ var Info = {
             'fileUrl' => $row->pushmsg_url*/
 
         //test data
-       var data = [{"msg":
+       /*var data = [{"msg":
        {"msg":"Melding 1","date":"1.1.2016"}},
            {"msg":{"msg":"Melding 2","date":"2.1.2016"}
-           }];
-        
+           }];*/
         
 
         //alert("List messages"+data.msg[1].msg);
