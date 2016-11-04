@@ -49,12 +49,19 @@ var app = {
 
     },
 
-    //things to do for the device
+    //things to do for the DEVICE
     onDeviceReady: function() {
 
         //This gives eror in build
       //  StatusBar.overlaysWebView(false);
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
+        console.log("setting badge numer");
+        alert("Set badge numer = 10");
+        cordova.plugins.notification.badge.set(10); //Does not work!! Everything stops...
+alert("Badge number is set to 10");
+        cordova.plugins.notification.badge.hasPermission(function (granted) {
+             console.log('Permission has been granted: ' + granted);
+        });
 
         //Push
         Push.setupPush();
@@ -1428,6 +1435,7 @@ var Files = {
 var Info = {
 
     init: function() {
+
             Info.getNumberOfUnreadMessages(0);
             Info.getMessages();
             Info.getArticle();
@@ -1545,6 +1553,7 @@ var Info = {
         if(localStorage.getItem("endpointArn")) {
             $("#contMessages").html(allFields);
             var endpointArn = localStorage.getItem("endpointArn");
+            endpointArn = 'arn:aws:sns:us-west-2:976398037860:endpoint/APNS_SANDBOX/PhonegapMinMoava/254600b6-b69e-382d-8128-0d3961de928e';//TEST
 
             $.ajax({
                 type: "POST",
@@ -1555,12 +1564,11 @@ var Info = {
                 },
                 fail: function(response) {
                      alert("Fail "+ response);
-
                 },
                 dataType: 'json'
             });
         }
-        else //JUST FOR TESTING - REMOVE!!!!!!!!!!!!!!!!!!!
+        else
         {
             var data = {};
             Info.listMessages(data);
@@ -1581,15 +1589,14 @@ var Info = {
        {"msg":"Melding 1","date":"1.1.2016"}},
            {"msg":{"msg":"Melding 2","date":"2.1.2016"}
            }];*/
-        
 
         //alert("List messages"+data.msg[1].msg);
-        var c = '';
+        var c = '<h3>Meldinger</h3>';
         c += '<div class="padding">';
         $.each(data, function(key, message)
         {
-            c += '<div class="card">';
-            c += '<div class="item item-text-wrap">'+message.msg.msg;
+            c += '<div class="ui-body">';
+            c += '<div class="ui-body ui-body-a ui-corner-all">'+message.msg.msg+' '+message.msg.msgID+' '+message.msg.what+' '+message.msg.whatID+' '+message.msg.fileUrl;
             c += '<div style="color:lightslategray;text-align:right;font-size: 80%;">'+message.msg.date+'</div>';
             c += '</div>';
             c += '</div>';
@@ -1651,17 +1658,18 @@ var Info = {
      */
     resetUnreadMsg: function() {
         if(localStorage.getItem("endpointArn")) {
-            steroids.logger.log('resetMsg');
+
             var endpointArn = localStorage.getItem("endpointArn");
             $.ajax({
                 type: "POST",
                 url: localStorage.getItem('site') + '/moavaapi/resetunreadpush/'+endpointArn,
                 success: function (data) {
-                    steroids.logger.log(data);
-                    steroids.logger.log(endpointArn);
-                    var pushNotification = window.plugins.pushNotification;
+
+                   /* var pushNotification = window.plugins.pushNotification;
                     pushNotification.setApplicationIconBadgeNumber(function(){}, function(){}, 0);
-                    supersonic.ui.tabs.update([{},{},{},{badge: '982'}]);
+                    supersonic.ui.tabs.update([{},{},{},{badge: '982'}]);*/
+                    $(".badge").html('');
+                    $(".badge").css("display", "none");
 
                 },
                 dataType: 'json'
@@ -1788,8 +1796,8 @@ var Info = {
 
     openFile: function(e) {
         var fileUrl = $(this).data('fileurl');
-        var fileView = new steroids.views.WebView(fileUrl);
-        steroids.layers.push(fileView);
+        //var fileView = new steroids.views.WebView(fileUrl);
+        //steroids.layers.push(fileView);
     }
 
 };
@@ -1845,7 +1853,7 @@ var Push = {
             }
             //get all fields
             var fields = '';
-            alert("Checkbox fields: "+ $(".chbSetting").length);
+
             $(".chbSetting:checked").each(function(index, setting){
                     fields += '&fields[]=' + $(setting).val();
             });
@@ -1855,13 +1863,13 @@ var Push = {
             {
                 user = localStorage.getItem('user');
             }
-            alert('DATA: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
+
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
                 data: 'endpointArn=' + currentEndpointArn + fields + '&user=' + user,
                 success: function(data) {
-                    alert('Got EndpointArn: '+data[0].endpointArn);
+
                     if(localStorage.getItem('endpointArn'))
                     {
                         localStorage.removeItem('endpointArn');
