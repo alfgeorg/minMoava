@@ -57,7 +57,7 @@ var app = {
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
-        Push.setupPush();
+        //Push.setupPush();
         app.initStartPage();
 
     },
@@ -428,7 +428,7 @@ var Settings = {
                     //save settings
 
                     //close modal
-                    //  location.reload();
+                      location.reload();
                     //$('.ui-dialog').dialog('close');
                 }
             }
@@ -1628,6 +1628,7 @@ var Info = {
         {
             $(".badge").html(badgeFromPush);
             $(".badge").css("display", "block");
+            if( window.isphone ) { cordova.plugins.notification.badge.set(badgeFromPush)};
         }
         else {
             $("#myLog").append("unread??");
@@ -1824,7 +1825,7 @@ var Info = {
 var Push = {
 
     setupPush: function() {
-        console.log('calling push init');
+
         var push = PushNotification.init({
             "android": {
                 "senderID": "742481540214"
