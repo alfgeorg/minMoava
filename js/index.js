@@ -57,7 +57,7 @@ var app = {
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
-        //Push.setupPush();
+        Push.setupPush();
         app.initStartPage();
 
     },
