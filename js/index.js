@@ -55,14 +55,6 @@ var app = {
         //This gives eror in build
       //  StatusBar.overlaysWebView(false);
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
-        console.log("Prøver å sjekke Cordova her. Virker det????? -------------------------------");
-        console.log(JSON.stringify(cordova.plugins));
-        //alert("Set badge numer = 10");
-       // cordova.plugins.notification.badge.set(10); //Does not work!! Everything stops...
-//alert("Badge number is set to 10");
-        /*cordova.plugins.notification.badge.hasPermission(function (granted) {
-             console.log('Permission has been granted: ' + granted);
-        });*/
 
         //Push
         Push.setupPush();
@@ -1586,7 +1578,7 @@ var Info = {
             'fileUrl' => $row->pushmsg_url*/
 
         //test data
-       var data = [{"msg":
+      /* var data = [{"msg":
        {
            "msg":"Ny artikkel: Fotballkamp",
            "date":"1.1.2016",
@@ -1603,7 +1595,7 @@ var Info = {
                "what": 'cal',
                "whatID": '53',
                "fileUrl": 'http://vg.no'
-           }}];
+           }}];*/
 
         //alert("List messages"+data.msg[1].msg);
         var c = '<h3>Meldinger</h3>';
@@ -1656,9 +1648,11 @@ var Info = {
                         else {
                             $(".badge").css("display", "none");
                         }
-                        /* var pushNotification = window.plugins.pushNotification;
-                         pushNotification.setApplicationIconBadgeNumber(function(){}, function(){}, badge);
-                         supersonic.ui.tabs.update([{},{},{},{badge: badge}]);*/
+                        //Set badge on icon
+                        if( window.isphone ) { cordova.plugins.notification.badge.set(badge)}; //Does not work!! Everything stops...
+                        /*cordova.plugins.notification.badge.hasPermission(function (granted) {
+                         console.log('Permission has been granted: ' + granted);
+                         });*/
 
                         $("#myLog").append("getNumberOfUnreadMessages: " + data[0].unread + ' Endpoint: ' + endpointArn);
                     },
@@ -1683,9 +1677,7 @@ var Info = {
                 url: localStorage.getItem('site') + '/moavaapi/resetunreadpush/'+endpointArn,
                 success: function (data) {
 
-                   /* var pushNotification = window.plugins.pushNotification;
-                    pushNotification.setApplicationIconBadgeNumber(function(){}, function(){}, 0);
-                    supersonic.ui.tabs.update([{},{},{},{badge: '982'}]);*/
+                    if( window.isphone ) { cordova.plugins.notification.badge.set(0)};
                     $(".badge").html('');
                     $(".badge").css("display", "none");
 
