@@ -55,13 +55,14 @@ var app = {
         //This gives eror in build
       //  StatusBar.overlaysWebView(false);
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
-        console.log("setting badge numer");
-        alert("Set badge numer = 10");
-        cordova.plugins.notification.badge.set(10); //Does not work!! Everything stops...
-alert("Badge number is set to 10");
-        cordova.plugins.notification.badge.hasPermission(function (granted) {
+        console.log("Prøver å sjekke Cordova her. Virker det????? -------------------------------");
+        console.log(JSON.stringify(cordova.plugins));
+        //alert("Set badge numer = 10");
+       // cordova.plugins.notification.badge.set(10); //Does not work!! Everything stops...
+//alert("Badge number is set to 10");
+        /*cordova.plugins.notification.badge.hasPermission(function (granted) {
              console.log('Permission has been granted: ' + granted);
-        });
+        });*/
 
         //Push
         Push.setupPush();
@@ -1576,7 +1577,7 @@ var Info = {
     },
 
     listMessages: function(data) {
-        /*
+       /*
         'msgID' => $row->pushmsg_id,
             'msg' => $row->pushmsg_txt,
             'date' => $row->pushmsg_date,
@@ -1585,27 +1586,44 @@ var Info = {
             'fileUrl' => $row->pushmsg_url*/
 
         //test data
-       /*var data = [{"msg":
-       {"msg":"Melding 1","date":"1.1.2016"}},
-           {"msg":{"msg":"Melding 2","date":"2.1.2016"}
-           }];*/
+       var data = [{"msg":
+       {
+           "msg":"Ny artikkel: Fotballkamp",
+           "date":"1.1.2016",
+           "msgID": '1',
+           "what": 'art',
+           "whatID": '372',
+           "fileUrl": 'http://nrk.no'
+       }},
+           {"msg":
+           {
+               "msg":"Ny kalenderhendels: Varbergmarsjen",
+               "date":"2.2.2016",
+               "msgID": '2',
+               "what": 'cal',
+               "whatID": '53',
+               "fileUrl": 'http://vg.no'
+           }}];
 
         //alert("List messages"+data.msg[1].msg);
         var c = '<h3>Meldinger</h3>';
-        c += '<div class="padding">';
+        c += '<ul class="ui-listview" data-role="listview">';
         $.each(data, function(key, message)
         {
-            c += '<div class="ui-body">';
-            c += '<div class="ui-body ui-body-a ui-corner-all">'+message.msg.msg+' '+message.msg.msgID+' '+message.msg.what+' '+message.msg.whatID+' '+message.msg.fileUrl;
-            c += '<div style="color:lightslategray;text-align:right;font-size: 80%;">'+message.msg.date+'</div>';
-            c += '</div>';
-            c += '</div>';
+            c += '<li class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-btn-up-c" data-role="fieldcontain">';
+            c += '<label class="ui-btn-text contMsg" data-id="'+message.msg.whatID+'">'+message.msg.msg+' '+message.msg.msgID+' '+message.msg.what+' '+message.msg.whatID+' '+message.msg.fileUrl;
+            c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span></label>';
+            c += '</li>';
         });
-        c += '</div>';
+        c += '</ul><br>';
+        if(data.length) {
+            c += '<div><button class="ui-btn removeMsg">Ok, meldingene er lest</button></div>';
+        }
         $("#contMessages").html(c);
+        //Remove msg - set as read
+        $(".removeMsg").on("click", Info.resetUnreadMsg);
 
-        //we have now read the messages, so reset to 0
-        Info.resetUnreadMsg();
+
     },
 
     /**
@@ -1656,7 +1674,7 @@ var Info = {
     /**
      * Set unread messages to 0
      */
-    resetUnreadMsg: function() {
+    resetUnreadMsg: function(e) {
         if(localStorage.getItem("endpointArn")) {
 
             var endpointArn = localStorage.getItem("endpointArn");
