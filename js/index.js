@@ -395,11 +395,9 @@ var Settings = {
     key: '',
 
     init: function() {
-
         //If site is set - we dont show this at startup
         if(localStorage.getItem('site') && localStorage.getItem('site') != '')
         {
-       
 
         }
 
@@ -419,6 +417,7 @@ var Settings = {
             }
             else {
                 if (Settings.site != '') {
+
                     Settings.saveSettings('art');
                     Settings.saveSettings('file');
                     Settings.saveSettings('cal');
@@ -454,7 +453,7 @@ var Settings = {
 
     getSites: function() {
 
-        var c = 'GET SITES';
+        var c = '';
         //This url will be changed to a common place for all sites
         $.post( "http://trunk.moava.no/moavaapi/settings", function( data ) {
 
@@ -471,6 +470,11 @@ var Settings = {
     },
 
     onSelectSite: function(e) {
+        //if we change site we delete push settings from old site
+        if(localStorage.getItem('site') && localStorage.getItem('site') != '' && localStorage.getItem("endpointArn") && localStorage.getItem("endpointArn") != '')
+        {
+            Settings.removeDevicePush(localStorage.getItem("endpointArn"), localStorage.getItem("site"));
+        }
         var siteUrl = this.value;
         Settings.site = siteUrl;
         //delete all settings in local storage
@@ -492,6 +496,20 @@ var Settings = {
         else {
             Settings.init();
         }
+
+    },
+
+    removeDevicePush: function(endpointArn, site) {
+        $.ajax({
+            type: "POST",
+            url: site + '/moavaapi/pushregisteroff/',
+            data: 'endpointArn='+endpointArn,
+            success: function (data) {
+
+            },
+            dataType: 'json'
+        });
+
 
     },
 
