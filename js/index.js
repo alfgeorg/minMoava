@@ -160,9 +160,6 @@ var Cal = {
 
             }
 
-
-        
-
     },
 
     /**
@@ -1690,7 +1687,8 @@ var Info = {
             var endpointArn = localStorage.getItem("endpointArn");
             $.ajax({
                 type: "POST",
-                url: localStorage.getItem('site') + '/moavaapi/resetunreadpush/'+endpointArn,
+                url: localStorage.getItem('site') + '/moavaapi/resetunreadpush/',
+                data: 'endpointArn='+endpointArn,
                 success: function (data) {
 
                     if( window.isphone ) { cordova.plugins.notification.badge.set(0)};
@@ -1935,6 +1933,8 @@ var Push = {
             console.log(data);
             //Show badge-number on tab Info
             Info.getNumberOfUnreadMessages(data.count);
+            //update messages
+            Info.getMessages();
             //Show message
             navigator.notification.alert(
                 data.message+data.count+data.sound,         // message
