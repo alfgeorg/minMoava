@@ -57,7 +57,7 @@ var app = {
       //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
-        Push.setupPush();
+        Push.setupPush(); //Should this be called here?
         app.initStartPage();
 
     },
@@ -1907,6 +1907,7 @@ var Push = {
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
                     //if we have set fields, we reload with new settings
                     //if(fields != '') {
+                    alert("Endpoint registered and now reloading: ");
                         location.reload();
                     //}
                 },
