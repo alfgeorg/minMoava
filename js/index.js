@@ -1694,7 +1694,7 @@ var Info = {
                     if( window.isphone ) { cordova.plugins.notification.badge.set(0)};
                     $(".badge").html('');
                     $(".badge").css("display", "none");
-
+                    Info.getMessages();
                 },
                 dataType: 'json'
             });
