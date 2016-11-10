@@ -1892,7 +1892,7 @@ var Push = {
             {
                 user = localStorage.getItem('user');
             }
-            //alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
+            alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
@@ -1912,10 +1912,10 @@ var Push = {
                     }
                 },
                 fail: function(response) {
-                    alert("Fail "+ response);
+                    //alert("Fail "+ response);
                 },
                 error: function(response) {
-                    alert("Fail "+ response);
+                    //alert("Fail "+ response);
                 },
                 dataType: 'json'
             });
