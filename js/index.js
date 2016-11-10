@@ -1911,6 +1911,9 @@ var Push = {
                         location.reload();
                     //}
                 },
+                fail: function(response) {
+                    alert("Fail "+ response);
+                },
                 dataType: 'json'
             });
 
