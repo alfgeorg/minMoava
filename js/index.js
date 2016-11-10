@@ -427,7 +427,7 @@ var Settings = {
                     //save settings
 
                     //close modal
-                      location.reload();
+                     // location.reload(); //Trouble? Wait for finish push?
                     //$('.ui-dialog').dialog('close');
                 }
             }
@@ -1907,9 +1907,9 @@ var Push = {
                     localStorage.setItem('endpointArn', data[0].endpointArn);
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
                     //if we have set fields, we reload with new settings
-                    if(fields != '') {
+                    //if(fields != '') {
                         location.reload();
-                    }
+                    //}
                 },
                 dataType: 'json'
             });
