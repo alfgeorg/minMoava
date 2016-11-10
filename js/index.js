@@ -417,7 +417,6 @@ var Settings = {
             }
             else {
                 if (Settings.site != '') {
-
                     Settings.saveSettings('art');
                     Settings.saveSettings('file');
                     Settings.saveSettings('cal');
@@ -1509,8 +1508,6 @@ var Info = {
     },
 
     getMessages: function() {
-
-
         var fields = '';
         /*
          if(localStorage.getItem("art") && localStorage.getItem("art") != Index.currentSavedSettings) {
@@ -1561,11 +1558,11 @@ var Info = {
         }
         var allFields = JSON.stringify(fields);
 
+
+
         if(localStorage.getItem("endpointArn")) {
             $("#contMessages").html(allFields);
             var endpointArn = localStorage.getItem("endpointArn");
-            endpointArn = 'arn:aws:sns:us-west-2:976398037860:endpoint/APNS_SANDBOX/PhonegapMinMoava/254600b6-b69e-382d-8128-0d3961de928e';//TEST
-
             $.ajax({
                 type: "POST",
                 url: localStorage.getItem('site') + '/moavaapi/getpushmsg',
@@ -1892,7 +1889,7 @@ var Push = {
             {
                 user = localStorage.getItem('user');
             }
-            alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
+            //alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
