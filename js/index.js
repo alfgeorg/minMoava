@@ -1902,7 +1902,6 @@ var Push = {
                     if(localStorage.getItem('endpointArn'))
                     {
                         localStorage.removeItem('endpointArn');
-
                     }
                     localStorage.setItem('endpointArn', data[0].endpointArn);
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
