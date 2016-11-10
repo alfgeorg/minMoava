@@ -1892,7 +1892,7 @@ var Push = {
             {
                 user = localStorage.getItem('user');
             }
-
+            alert("Now pushregistering: ");
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
