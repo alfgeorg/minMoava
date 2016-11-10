@@ -1892,7 +1892,7 @@ var Push = {
             {
                 user = localStorage.getItem('user');
             }
-            alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
+            //alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
             $.ajax({
                 type: "POST",
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
@@ -1906,12 +1906,15 @@ var Push = {
                     localStorage.setItem('endpointArn', data[0].endpointArn);
                     console.log('Mottat endpointArn: ' + data[0].endpointArn);
                     //if we have set fields, we reload with new settings
-                    //if(fields != '') {
-                    alert("Endpoint registered and now reloading: ");
+                    if(fields != '') {
+                    //alert("Endpoint registered and now reloading: ");
                         location.reload();
-                    //}
+                    }
                 },
                 fail: function(response) {
+                    alert("Fail "+ response);
+                },
+                error: function(response) {
                     alert("Fail "+ response);
                 },
                 dataType: 'json'
