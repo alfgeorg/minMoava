@@ -1590,6 +1590,7 @@ var Info = {
             'fileUrl' => $row->pushmsg_url*/
 
         //test data
+        /*
        var data = [{"msg":
        {
            "msg":"Ny artikkel: Fotballkamp og masse tekst her så må sjekke om det blir plass til alt eller hvordan nå dette fungerer. <br>Ny artikkel: Fotballkamp og masse tekst her så må sjekke om det blir plass til alt eller hvordan nå dette fungererNy artikkel: Fotballkamp og masse tekst her så må sjekke om det blir plass til alt eller hvordan nå dette fungerer",
@@ -1608,7 +1609,7 @@ var Info = {
                "whatID": '53',
                "fileUrl": 'http://vg.no'
            }}];
-
+*/
         //alert("List messages"+data.msg[1].msg);
         var c = '<h3>Meldinger</h3>';
 
