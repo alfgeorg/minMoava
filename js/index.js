@@ -1430,7 +1430,7 @@ var Files = {
 
     onFile: function(e) {
         var fileUrl = $(this).data('fileurl');
-        var ref = cordova.InAppBrowser.open(fileUrl, '_system');//_blank, _system
+        var ref = cordova.InAppBrowser.open(fileUrl, '_blank', 'location=yes');//_blank, _system
        // var fileView = new steroids.views.WebView(fileUrl);
        // steroids.layers.push(fileView);
     }
