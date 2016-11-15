@@ -1430,7 +1430,7 @@ var Files = {
 
     onFile: function(e) {
         var fileUrl = $(this).data('fileurl');
-        window.open(fileUrl, '_system');//_blank, _system
+        var ref = cordova.InAppBrowser.open(fileUrl, '_system');//_blank, _system
        // var fileView = new steroids.views.WebView(fileUrl);
        // steroids.layers.push(fileView);
     }
@@ -1590,9 +1590,9 @@ var Info = {
             'fileUrl' => $row->pushmsg_url*/
 
         //test data
-      /* var data = [{"msg":
+       var data = [{"msg":
        {
-           "msg":"Ny artikkel: Fotballkamp",
+           "msg":"Ny artikkel: Fotballkamp og masse tekst her så må sjekke om det blir plass til alt eller hvordan nå dette fungerer. <br>Ny artikkel: Fotballkamp og masse tekst her så må sjekke om det blir plass til alt eller hvordan nå dette fungererNy artikkel: Fotballkamp og masse tekst her så må sjekke om det blir plass til alt eller hvordan nå dette fungerer",
            "date":"1.1.2016",
            "msgID": '1',
            "what": 'art',
@@ -1607,19 +1607,31 @@ var Info = {
                "what": 'cal',
                "whatID": '53',
                "fileUrl": 'http://vg.no'
-           }}];*/
+           }}];
 
         //alert("List messages"+data.msg[1].msg);
         var c = '<h3>Meldinger</h3>';
-        c += '<ul class="ui-listview" data-role="listview">';
+
+
+       // c += '<ul class="ui-listview" data-role="listview">';
         $.each(data, function(key, message)
         {
+            c += '<div class="ui-body ui-body-a ui-corner-all" style="margin-bottom:6px;">';
+            c += '<h5 class="ui-bar ui-bar-a ui-corner-all">'+message.msg.title+'</h5>';
+            c += '<p>';
+            c += message.msg.msg;
+            c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span>';
+            c += '</p>';
+            c += '</div>';
+            /*
             c += '<li class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-btn-up-c" data-role="fieldcontain">';
             c += '<label class="ui-btn-text contMsg" data-id="'+message.msg.whatID+'">'+message.msg.msg+' '+message.msg.msgID+' '+message.msg.what+' '+message.msg.whatID+' '+message.msg.fileUrl;
             c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span></label>';
             c += '</li>';
+            */
         });
-        c += '</ul><br>';
+       // c += '</ul><br>';
+
         if(data.length) {
             c += '<div><button class="ui-btn removeMsg">Ok, meldingene er lest</button></div>';
         }
