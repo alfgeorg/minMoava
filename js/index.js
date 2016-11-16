@@ -1481,8 +1481,6 @@ var Files = {
         else {
             window.open(fileUrl);
         }
-       // var fileView = new steroids.views.WebView(fileUrl);
-       // steroids.layers.push(fileView);
     }
 };
 
