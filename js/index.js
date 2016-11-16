@@ -1991,8 +1991,8 @@ var Push = {
             //play sound
             //navigator.notification.beep(1);
 
-
-            var myMedia = new Media("sound.WAV")
+            //Play push message sound
+            var myMedia = new Media("moavapushsound.wav");
             myMedia.play();
 
             //Show message - Maybe
