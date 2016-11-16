@@ -81,7 +81,10 @@ var app = {
             //var url = active.href;
             var hash = active.substring(active.indexOf('#')+1);
             alert(hash);*/
+
         } );
+
+
     }
 };
 
@@ -2002,6 +2005,9 @@ var Push = {
                 data.title,           // title
                 'Ok'                  // buttonName
             );
+
+            $("#messageContent").html(data.message);
+            $.mobile.changePage('#dialogMessages');
 
 
 
