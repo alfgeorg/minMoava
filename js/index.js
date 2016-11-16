@@ -415,7 +415,7 @@ var Cal = {
          $("#contFiles").html(f);*/
         $("#contDynamic").html(c+img+f+closeBtn);
 
-        $(".filesCard").on("click", Show.openFile);
+        $(".filesCard").on("click", Files.onFile);
     }
 
 };
@@ -444,7 +444,7 @@ var Settings = {
             var userInfo = JSON.parse(localStorage.getItem("user"));
             Settings.user = userInfo.id;
             Settings.key = userInfo.key;
-            $("#myLog").append('User: '+Settings.user + ' Key: ' + Settings.key);
+           // $("#myLog").append('User: '+Settings.user + ' Key: ' + Settings.key);
         }
 
         //Finish - Save settings and close initial view
@@ -750,12 +750,12 @@ var Settings = {
             for(var i=0;i<savedOn.length;i++)
             {
                 on.push(parseInt(savedOn[i]));
-                $("#myLog").append("ON: " + on[i]);
+               // $("#myLog").append("ON: " + on[i]);
             }
             for(var k=0;k<savedOff.length;k++)
             {
                 off.push(parseInt(savedOff[k]));
-                $("#myLog").append("OFF: " + off[k]);
+              //  $("#myLog").append("OFF: " + off[k]);
             }
 
 
@@ -828,7 +828,7 @@ var Settings = {
         });
 
         localStorage.setItem(what, JSON.stringify(selected));
-          $("#myLog").append(JSON.stringify(selected));
+         // $("#myLog").append(JSON.stringify(selected));
 
     },
 
@@ -1057,7 +1057,7 @@ document.addEventListener("deviceready", function() {
                         Index.artFieldsOff = '';//empty fields
                         Index.currentSavedSettings = '';//empty settings
                         Index.appTime = d.getTime();
-                        $("#myLog").append("RESET 2 APPTIME");
+                      //  $("#myLog").append("RESET 2 APPTIME");
                     }
                     Index.getArticles(0);
                 });
@@ -1073,7 +1073,7 @@ document.addEventListener("deviceready", function() {
     },
 
     getNumberOfUnreadMessages: function() {
-        $("#myLog").append("unread??");
+       // $("#myLog").append("unread??");
         if(localStorage.getItem("endpointArn")) {
             var endpointArn = localStorage.getItem("endpointArn");
             $.ajax({
@@ -1086,7 +1086,7 @@ document.addEventListener("deviceready", function() {
                     /*var pushNotification = window.plugins.pushNotification;
                     pushNotification.setApplicationIconBadgeNumber(function(){}, function(){}, badge);
                     supersonic.ui.tabs.update([{},{},{},{badge: badge}]);*/
-                    $("#myLog").append("getNumberOfUnreadMessages: "+ data[0].unread + ' Endpoint: '+endpointArn);
+                   // $("#myLog").append("getNumberOfUnreadMessages: "+ data[0].unread + ' Endpoint: '+endpointArn);
                 },
                 dataType: 'json'
             });
@@ -1416,24 +1416,24 @@ var Files = {
     },
 
     getFiles: function() {
-        $("#myLog").append('REQUEST: user=' + Files.user + '&key=' + Files.key + '&fields=' + Files.fileFields + '&fieldsOff=' + Files.fileFieldsOff + '&time=' + Files.appTime);
+       // $("#myLog").append('REQUEST: user=' + Files.user + '&key=' + Files.key + '&fields=' + Files.fileFields + '&fieldsOff=' + Files.fileFieldsOff + '&time=' + Files.appTime);
         $.ajax({
             type: "POST",
             url: Files.site + '/moavaapi/file',
             data:  'user=' + Files.user + '&key=' + Files.key + '&fields=' + Files.fileFields + '&fieldsOff=' + Files.fileFieldsOff + '&time=' + Files.appTime,
             success: function(data) {
-                $("#myLog").append('Info lastUpdate: ' + data.info.lastUpdate);
+              //  $("#myLog").append('Info lastUpdate: ' + data.info.lastUpdate);
                 console.log('FILE DATA:');
                 console.log(data.content);
-                $("#myLog").append(data.content[0].fieldTitle);
-                $("#myLog").append('Req update '+Files.appTime+' ('+data.content.length+') - ');
+             //   $("#myLog").append(data.content[0].fieldTitle);
+             //   $("#myLog").append('Req update '+Files.appTime+' ('+data.content.length+') - ');
                 if(data.content.length > 0)
                 {
                     if(Files.appTime < data.info.lastUpdate) Files.listFileList(data.content);
                     Files.appTime = data.info.lastUpdate;//We have now updated our app, and update last update time.
 
                     //console.log('Runs update (' + Files.appTime + ' ' + data.info.lastUpdate + ') - ');
-                    $("#myLog").append('Runs update (AppTime: ' + Files.appTime + ' LastServerTime: ' + data.info.lastUpdate + ') - ');
+                  //  $("#myLog").append('Runs update (AppTime: ' + Files.appTime + ' LastServerTime: ' + data.info.lastUpdate + ') - ');
                 }
             },
             dataType: 'json'
@@ -1473,7 +1473,14 @@ var Files = {
 
     onFile: function(e) {
         var fileUrl = $(this).data('fileurl');
-        var ref = cordova.InAppBrowser.open(fileUrl, '_blank', 'location=yes');//_blank, _system
+        var ext = fileUrl.split('.').pop();
+        //open pdf and images in in ap browser - else in browser
+        if(ext == 'jpg' || ext == 'png' || ext == 'pdf') {
+            var ref = cordova.InAppBrowser.open(fileUrl, '_blank', 'location=yes,closebuttoncaption=Lukk,enableViewportScale=yes');//_blank, _system
+        }
+        else {
+            window.open(fileUrl);
+        }
        // var fileView = new steroids.views.WebView(fileUrl);
        // steroids.layers.push(fileView);
     }
@@ -1699,7 +1706,7 @@ var Info = {
             if( window.isphone ) { cordova.plugins.notification.badge.set(badgeFromPush)};
         }
         else {
-            $("#myLog").append("unread??");
+            //  $("#myLog").append("unread??");
             if (localStorage.getItem("endpointArn")) {
                 var endpointArn = localStorage.getItem("endpointArn");
                 $.ajax({
@@ -1723,7 +1730,7 @@ var Info = {
                          console.log('Permission has been granted: ' + granted);
                          });*/
 
-                        $("#myLog").append("getNumberOfUnreadMessages: " + data[0].unread + ' Endpoint: ' + endpointArn);
+                    //    $("#myLog").append("getNumberOfUnreadMessages: " + data[0].unread + ' Endpoint: ' + endpointArn);
                     },
                     fail: function () {
 
@@ -1868,16 +1875,10 @@ var Info = {
 
         //add delete button to the end
         $("#contDeleteButton").html('<p><input type="button" id="btnDeleteArticle" value="Slett '+art.title+'" class="button  button-block button-dark edit" data-artid="'+ art.id+'" style="display:none;" /></p>');
-        $(".filesCard").on("click", Info.openFile);
+        $(".filesCard").on("click", Files.onFile);
 
 
 
-    },
-
-    openFile: function(e) {
-        var fileUrl = $(this).data('fileurl');
-        //var fileView = new steroids.views.WebView(fileUrl);
-        //steroids.layers.push(fileView);
     }
 
 };
@@ -1913,7 +1914,7 @@ var Push = {
          * data.registrationId
          */
         push.on('registration', function(data) {
-            $("#myLog").append('<p>DEVICE ID: '+ data.registrationId+'</p>');
+           // $("#myLog").append('<p>DEVICE ID: '+ data.registrationId+'</p>');
             console.log('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
