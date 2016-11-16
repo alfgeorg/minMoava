@@ -1475,11 +1475,11 @@ var Files = {
         var fileUrl = $(this).data('fileurl');
         var ext = fileUrl.split('.').pop();
         //open pdf and images in in ap browser - else in browser
-        if(ext == 'jpg' || ext == 'png' || ext == 'pdf') {
+        if(ext == 'jpg' || ext == 'png') {
             var ref = cordova.InAppBrowser.open(fileUrl, '_blank', 'location=yes,closebuttoncaption=Lukk,enableViewportScale=yes');//_blank, _system
         }
         else {
-            window.open(fileUrl);
+            window.open(fileUrl, '_system');
         }
     }
 };
