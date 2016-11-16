@@ -56,7 +56,15 @@ var app = {
         //Push
         Push.setupPush(); //Should this be called here?
         app.initStartPage();
+        document.addEventListener("resume", app.onResumeApp, false);
+    },
 
+    /**
+     * When opening app again after clicked home butten
+     */
+    onResumeApp: function() {
+        //Update messages
+        Info.init();
     },
 
     // Things to do with DOM
@@ -69,7 +77,10 @@ var app = {
         Info.init();
         nav.init();
         $( ".navbar" ).on( "navbarcreate", function( event, ui ) {
-           // alert("navnbar created");
+          /*  var active = $(".ui-btn-active").prop('href');
+            //var url = active.href;
+            var hash = active.substring(active.indexOf('#')+1);
+            alert(hash);*/
         } );
     }
 };
@@ -1978,8 +1989,13 @@ var Push = {
             //update messages
             Info.getMessages();
             //play sound
-            navigator.notification.beep(1);
-            //Show message
+            //navigator.notification.beep(1);
+
+
+            var myMedia = new Media("sound.WAV")
+            myMedia.play();
+
+            //Show message - Maybe
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
