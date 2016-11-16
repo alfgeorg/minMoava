@@ -1977,9 +1977,11 @@ var Push = {
             Info.getNumberOfUnreadMessages(data.count);
             //update messages
             Info.getMessages();
+            //play sound
+            navigator.notification.beep(1);
             //Show message
             navigator.notification.alert(
-                data.message+data.count+data.sound,         // message
+                data.message,         // message
                 null,                 // callback
                 data.title,           // title
                 'Ok'                  // buttonName
