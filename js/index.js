@@ -52,9 +52,6 @@ var app = {
     //things to do for the DEVICE
     onDeviceReady: function() {
 
-        //This gives eror in build
-      //  StatusBar.overlaysWebView(false);
-      //  StatusBar.backgroundColorByHexString("#e9e9e9"); // => #333333
 
         //Push
         Push.setupPush(); //Should this be called here?
@@ -70,9 +67,39 @@ var app = {
         Files.init();
         Settings.init();
         Info.init();
-
-
+        nav.init();
+        $( ".navbar" ).on( "navbarcreate", function( event, ui ) {
+           // alert("navnbar created");
+        } );
     }
+};
+
+/**
+ * When click on tab - we update content
+ * @type {{init: nav.init}}
+ */
+var nav = {
+  init: function() {
+      $(".navbar a").on("click", function(e) {
+          var url = this.href;
+          var hash = url.substring(url.indexOf('#')+1);
+            $(this).addClass("ui-btn-active");
+          switch(hash) {
+              case 'calendar':
+                  Cal.init();
+                  break;
+              case 'news':
+                  Index.init();
+                  break;
+              case 'info':
+                  Info.init();
+                  break;
+              case 'files':
+                  Files.init();
+                  break;
+          }
+      });
+  }
 };
 
 var Cal = {
@@ -189,7 +216,7 @@ var Cal = {
                         Cal.listEvent(data.events[0]);
                     }
                     else {
-                        Cal.listCalList(data.events);
+                        if(Cal.appTime < data.info.lastUpdate) Cal.listCalList(data.events);
                         Cal.appTime = data.info.lastUpdate;//We have now updated our app, and update last update time.
 
                         //console.log('Runs update (' + Cal.appTime + ' ' + data.info.lastUpdate + ') - ');
@@ -1074,8 +1101,10 @@ document.addEventListener("deviceready", function() {
                         Index.listCompleteArticle(data[0]);
                     }
                     else {//list all
-                        Index.listArticle(data[0]);
-                        Index.listArticleList(data);
+                        if(Index.appTime < data[0].lastUpdate) {
+                            Index.listArticle(data[0]);
+                            Index.listArticleList(data);
+                        }
                         Index.appTime = data[0].lastUpdate;//We have now updated our app, and update last update time.
                        // $("#myLog").append('Runs update (AppTime: ' + Index.appTime + ' LastServerTime: ' + data[0].lastUpdate + ') - ');
                     }
@@ -1386,7 +1415,7 @@ var Files = {
                 $("#myLog").append('Req update '+Files.appTime+' ('+data.content.length+') - ');
                 if(data.content.length > 0)
                 {
-                    Files.listFileList(data.content);
+                    if(Files.appTime < data.info.lastUpdate) Files.listFileList(data.content);
                     Files.appTime = data.info.lastUpdate;//We have now updated our app, and update last update time.
 
                     //console.log('Runs update (' + Files.appTime + ' ' + data.info.lastUpdate + ') - ');
