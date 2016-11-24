@@ -1998,13 +1998,14 @@ var Push = {
             myMedia.play();
 
             //Show message - Maybe
+            /*
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
                 data.title,           // title
                 'Ok'                  // buttonName
             );
-
+*/
             $("#messageContent").html(data.message);
             $.mobile.changePage('#dialogMessages');
 
