@@ -83,10 +83,10 @@ var app = {
             alert(hash);*/
 
         } );
-        /*var message =  Info.findUrlsInText("Send mail til mailto:alf.georg.ostebrot@dabb.no Les vår siste nyhet her: http://nrk.no der og les vg.no og les http://apple.no. og denne fra Husabø skole: http://husabo.eigersundskolen.no/?artID=9765&navB=1 ");
+        var message =  Info.findUrlsInText("Sjekker noen flere linker: http://nrk.no vg.no google.no. http://husabo.eigersundskolen.no/?artID=9765&navB=1 ");
 
         $("#messageContent").html(message);
-        $.mobile.changePage('#dialogMessages');*/
+        $.mobile.changePage('#dialogMessages');
     }
 };
 
@@ -1555,6 +1555,7 @@ var Info = {
     },
 
     findUrlsInText: function(text) {
+        text = text.replace('&amp;', '&');
         //var urls = text.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
         var urls = text.match(/(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g);
         for (var i = 0, il = urls.length; i < il; i++) {
