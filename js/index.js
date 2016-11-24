@@ -83,7 +83,7 @@ var app = {
             alert(hash);*/
 
         } );
-        /*var message =  Info.findUrlsInText("Les vår siste nyhet her: http://nrk.no der og les vg.no og les http://apple.no.");
+        /*var message =  Info.findUrlsInText("Send mail til mailto:alf.georg.ostebrot@dabb.no Les vår siste nyhet her: http://nrk.no der og les vg.no og les http://apple.no. og denne fra Husabø skole: http://husabo.eigersundskolen.no/?artID=9765&navB=1 ");
 
         $("#messageContent").html(message);
         $.mobile.changePage('#dialogMessages');*/
@@ -1555,11 +1555,12 @@ var Info = {
     },
 
     findUrlsInText: function(text) {
-        var urls = text.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
+        //var urls = text.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
+        var urls = text.match(/(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g);
         for (var i = 0, il = urls.length; i < il; i++) {
             //Check if urls contain http
             var url = urls[i];
-            if(!urls[i].match(/http/)) url = 'http://' + urls[i];
+            if(!urls[i].match(/http/) && !urls[i].match(/mailto/)) url = 'http://' + urls[i];
             //replace links with a-tags
             text = text.replace(urls[i], '<a href="'+url+'">'+urls[i]+'</a>');
         }
