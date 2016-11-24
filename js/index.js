@@ -83,7 +83,10 @@ var app = {
             alert(hash);*/
 
         } );
+        /*var message =  Info.findUrlsInText("Les vår siste nyhet her: http://nrk.no der og les vg.no og les http://apple.no.");
 
+        $("#messageContent").html(message);
+        $.mobile.changePage('#dialogMessages');*/
     }
 };
 
@@ -1551,6 +1554,18 @@ var Info = {
          */
     },
 
+    findUrlsInText: function(text) {
+        var urls = text.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
+        for (var i = 0, il = urls.length; i < il; i++) {
+            //Check if urls contain http
+            var url = urls[i];
+            if(!urls[i].match(/http/)) url = 'http://' + urls[i];
+            //replace links with a-tags
+            text = text.replace(urls[i], '<a href="'+url+'">'+urls[i]+'</a>');
+        }
+        return text;
+    },
+
     getMessages: function() {
         var fields = '';
         /*
@@ -1667,7 +1682,7 @@ var Info = {
             c += '<div class="ui-body ui-body-a ui-corner-all" style="margin-bottom:6px;">';
             c += '<h5 class="ui-bar ui-bar-a ui-corner-all">'+message.msg.title+'</h5>';
             c += '<p>';
-            c += message.msg.msg;
+            c += Info.findUrlsInText(message.msg.msg);
             c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span>';
             c += '</p>';
             c += '</div>';
@@ -2005,7 +2020,9 @@ var Push = {
                 'Ok'                  // buttonName
             );
 */
-            $("#messageContent").html(data.message);
+            var message = Info.findUrlsInText(data.message);
+
+            $("#messageContent").html(message);
             $.mobile.changePage('#dialogMessages');
 
 
