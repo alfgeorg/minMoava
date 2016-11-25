@@ -615,8 +615,13 @@ var Settings = {
         }
         var siteUrl = this.value;
         Settings.site = siteUrl;
-        //delete all settings in local storage
-        localStorage.clear();
+        //delete settings in local storage
+       localStorage.removeItem('site');
+        localStorage.removeItem('user');
+        localStorage.removeItem('art');
+        localStorage.removeItem('cal');
+        localStorage.removeItem('file');
+
         //empty settings:
         $("#contSettings").html('');
         $("#contLogIn").html('');
