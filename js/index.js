@@ -1836,7 +1836,7 @@ var Info = {
     },
 
     getArticle: function() {
-        $.mobile.loading( 'show' );
+
         $.ajax({
             type: "POST",
             url: localStorage.getItem('site') + '/moavaapi/info',
@@ -1943,7 +1943,7 @@ var Info = {
         $("#contArticle").html(c);
         $("#contImg").html(img);
         $("#contFiles").html(f);
-        $.mobile.loading( 'hide' );
+
         //add delete button to the end
         $("#contDeleteButton").html('<p><input type="button" id="btnDeleteArticle" value="Slett '+art.title+'" class="button  button-block button-dark edit" data-artid="'+ art.id+'" style="display:none;" /></p>');
         $(".filesCard").on("click", Files.onFile);
