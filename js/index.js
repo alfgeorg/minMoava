@@ -269,16 +269,50 @@ var Cal = {
                 tempDayStr = dayStr;
             }
 
-
-            c += '<li>';
+//console.log('CAL: ' +cal.title);
+            /*c += '<li>';
             c += '<a href="#dynamic" class="getContentEvent ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+cal.id+'">';
             c += '<span class="ui-li-count" style="left:1em;right:auto;border:none;top:2.5em">' + cal.timeFrom + '<br>' + cal.timeTo + '</span>';
-            c += '<h2 style="margin-left:55px;">' + cal.title + '</h2>';
+            c += '<img src="' + cal.mainImg.imgUrl.small+'" />';
+            c += '<h2 style="margin-left:55px;">' + cal.title +'</h2>';
             c += '<p style="margin-left:55px;">' + cal.ingress + '</p>';
             c += '</a>';
-            c += '</li>';
+            c += '</li>';*/
+
+
+
+
+                c += '<li class="ui-li-has-thumb">';
+                c += '<a href="#dynamic" class="getContent ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+cal.id+'">';
+                c += '<span class="ui-li-count" style="left:1em;right:auto;border:none;top:2.5em;padding:0;text-align:left;">';
+                if(cal.timeFrom != '') c += cal.timeFrom + ' -';
+                c += '<br>';
+                if(cal.timeTo != '' && cal.timeFrom == '') c += '- ';
+                c += cal.timeTo + '</span>';
+                if(cal.mainImg != '')
+                {
+                    var imgSrc = cal.mainImg.imgUrl.small;
+                    if(cal.mainImg.type == 'video')
+                    {
+                        imgSrc = cal.mainImg.vidImg;
+                    }
+                    c += '<img src="' + imgSrc +'" width="100px;" style="float:left;margin-right:20px;"/>';
+                }
+
+                c += '<h2>'+cal.title+'</h2>';
+                c += '<p>'+cal.ingress+'</p>';
+                c += '</a>';
+                c += '</li>';
+
+
+
+
         });
         c += '</ul>';
+
+
+
+
 
         $("#contEvents").html(c);
         $.mobile.loading( 'hide' );
