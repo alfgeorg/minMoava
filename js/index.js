@@ -284,7 +284,6 @@ var Cal = {
 
                 c += '<li class="ui-li-has-thumb">';
                 c += '<a href="#dynamic" class="getContent ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+cal.id+'">';
-
                 c += '<span class="ui-li-count" style="font-size: 1em; left:1em;right:auto;border:none;top:1.5em;padding:0;text-align:left;">';
 
                 if(cal.timeFrom != '') c += cal.timeFrom + ' -';
