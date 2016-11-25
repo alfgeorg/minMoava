@@ -460,7 +460,7 @@ var Settings = {
             }
             else {
                 if (Settings.site != '') {
-                    $.mobile.loading( 'show' );
+
                     Settings.saveSettings('art');
                     Settings.saveSettings('file');
                     Settings.saveSettings('cal');
@@ -1602,7 +1602,7 @@ var Info = {
 
         if(localStorage.getItem("art"))
         {
-            $("#contMessages").append('art');
+
             //reload with new settings
             setting = JSON.parse(localStorage.getItem("art"));
             var fieldsArt = setting.on;
@@ -1639,7 +1639,7 @@ var Info = {
 
 
         if(localStorage.getItem("endpointArn")) {
-            $("#contMessages").html(allFields);
+
             var endpointArn = localStorage.getItem("endpointArn");
             $.ajax({
                 type: "POST",
@@ -1777,6 +1777,7 @@ var Info = {
      * Set unread messages to 0
      */
     resetUnreadMsg: function(e) {
+        $.mobile.loading( 'show' );
         if(localStorage.getItem("endpointArn")) {
 
             var endpointArn = localStorage.getItem("endpointArn");
@@ -1785,7 +1786,7 @@ var Info = {
                 url: localStorage.getItem('site') + '/moavaapi/resetunreadpush/',
                 data: 'endpointArn='+endpointArn,
                 success: function (data) {
-
+                    $.mobile.loading( 'hide' );
                     if( window.isphone ) { cordova.plugins.notification.badge.set(0)};
                     $(".badge").html('');
                     $(".badge").css("display", "none");
@@ -1982,7 +1983,6 @@ var Push = {
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
                 data: 'endpointArn=' + currentEndpointArn + fields + '&user=' + user,
                 success: function(data) {
-                    $.mobile.loading( 'hide' );
                     if(localStorage.getItem('endpointArn'))
                     {
                         localStorage.removeItem('endpointArn');
