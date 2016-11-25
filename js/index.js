@@ -284,20 +284,24 @@ var Cal = {
 
                 c += '<li class="ui-li-has-thumb">';
                 c += '<a href="#dynamic" class="getContent ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+cal.id+'">';
-                c += '<span class="ui-li-count" style="left:1em;right:auto;border:none;top:2.5em;padding:0;text-align:left;">';
+
+                c += '<span class="ui-li-count" style="font-size: 1em; left:1em;right:auto;border:none;top:1.5em;padding:0;text-align:left;">';
+
                 if(cal.timeFrom != '') c += cal.timeFrom + ' -';
                 c += '<br>';
                 if(cal.timeTo != '' && cal.timeFrom == '') c += '- ';
                 c += cal.timeTo + '</span>';
-                if(cal.mainImg != '')
+            if(cal.mainImg != '')
+            {
+                var imgSrc = cal.mainImg.imgUrl.small;
+                if(cal.mainImg.type == 'video')
                 {
-                    var imgSrc = cal.mainImg.imgUrl.small;
-                    if(cal.mainImg.type == 'video')
-                    {
-                        imgSrc = cal.mainImg.vidImg;
-                    }
-                    c += '<img src="' + imgSrc +'" width="100px;" style="float:left;margin-right:20px;"/>';
+                    imgSrc = cal.mainImg.vidImg;
                 }
+                c += '<img src="' + imgSrc +'" width="90px;" style="float:left;margin-right:4px;"/>';
+            }
+
+
 
                 c += '<h2>'+cal.title+'</h2>';
                 c += '<p>'+cal.ingress+'</p>';
