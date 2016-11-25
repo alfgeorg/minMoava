@@ -2047,13 +2047,12 @@ var Push = {
          */
         push.on('registration', function(data) {
 
-            var oldRegId = localStorage.getItem('registrationId');
-            if (oldRegId !== data.registrationId) {
-                // Save new registration ID
-                localStorage.setItem('registrationId', data.registrationId);
-            }
+            if(localStorage.getItem('registrationId'))  localStorage.removeItem('registrationId');
 
-alert("registrationID: " + data.registrationId + ' localStorage: '+ localStorage.getItem('registrationId'));
+            localStorage.setItem('registrationId', data.registrationId);
+
+
+alert("registrationID: " + localStorage.getItem('registrationId'));
 
             //Settings.setPushSettings('', 0);
 
