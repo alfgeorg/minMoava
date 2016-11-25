@@ -559,6 +559,8 @@ var Settings = {
             currentEndpointArn = localStorage.getItem('endpointArn');
             //localStorage.removeItem('endpointArn');
         }
+
+        alert("Set settings " + Settings.site + '/moavaapi/pushregister/' + localStorage.getItem('registrationId') + 'endpointArn=' + currentEndpointArn + fields + '&user=' + user);
         $.ajax({
             type: "POST",
             url: Settings.site + '/moavaapi/pushregister/' + localStorage.getItem('registrationId'),
@@ -2051,9 +2053,9 @@ var Push = {
                 localStorage.setItem('registrationId', data.registrationId);
             }
 
+alert("registrationID: " + data.registrationId + ' localStorage: '+ localStorage.getItem('registrationId'));
 
-
-            Settings.setPushSettings('', 0);
+            //Settings.setPushSettings('', 0);
 
 
 
