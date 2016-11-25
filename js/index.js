@@ -69,6 +69,7 @@ var app = {
 
     // Things to do with DOM
     initStartPage: function() {
+//cue the page loader
 
         Index.init();
         Cal.init();
@@ -211,6 +212,7 @@ var Cal = {
      * data.events - all events loop trought: title, description
      */
     getEvents: function(eventID) {
+        $.mobile.loading( 'show' );
         var url = Cal.site + '/moavaapi/cal';
         if(eventID > 0)
         {
@@ -279,6 +281,7 @@ var Cal = {
         c += '</ul>';
 
         $("#contEvents").html(c);
+        $.mobile.loading( 'hide' );
         //prevent from scrolling to top
         $("#contEvents a").on("click", function(e) {
             var eventID = $(this).data('id');
@@ -416,7 +419,7 @@ var Cal = {
          $("#contImg").html(img);
          $("#contFiles").html(f);*/
         $("#contDynamic").html(c+img+f+closeBtn);
-
+        $.mobile.loading( 'hide' );
         $(".filesCard").on("click", Files.onFile);
     }
 
@@ -457,6 +460,7 @@ var Settings = {
             }
             else {
                 if (Settings.site != '') {
+                    $.mobile.loading( 'show' );
                     Settings.saveSettings('art');
                     Settings.saveSettings('file');
                     Settings.saveSettings('cal');
@@ -491,7 +495,7 @@ var Settings = {
     },
 
     getSites: function() {
-
+        $.mobile.loading( 'show' );
         var c = '';
         //This url will be changed to a common place for all sites
         $.post( "http://trunk.moava.no/moavaapi/settings", function( data ) {
@@ -501,7 +505,7 @@ var Settings = {
             c +=  Settings.listSelectSite( data.site);
             c += '</form>';
             $("#contSites").html(c);
-
+            $.mobile.loading( 'hide' );
             $("#selSite").on("change", Settings.onSelectSite);
         });
 
@@ -509,6 +513,7 @@ var Settings = {
     },
 
     onSelectSite: function(e) {
+
         //if we change site we delete push settings from old site
         if(localStorage.getItem('site') && localStorage.getItem('site') != '' && localStorage.getItem("endpointArn") && localStorage.getItem("endpointArn") != '')
         {
@@ -570,6 +575,7 @@ var Settings = {
     },
 
     getSettings: function() {
+        $.mobile.loading( 'show' );
         var c = '';
         //POST
         $.ajax({
@@ -633,6 +639,7 @@ var Settings = {
 
 
                 $("#contSettings").html(c);
+                $.mobile.loading( 'hide' );
                 $("#feedbackLogin").html("");
                 //Listeners to checkboxes
                 /*
@@ -809,6 +816,7 @@ var Settings = {
     },
 
     saveSettings: function(what) {
+
         //empty local storage
         if(localStorage.getItem(what))
         {
@@ -1096,6 +1104,7 @@ document.addEventListener("deviceready", function() {
     },
 
     getArticles: function(artID) {
+        $.mobile.loading( 'show' );
         var url = Index.site + '/moavaapi/art';
         if(artID > 0)
         {
@@ -1167,6 +1176,7 @@ document.addEventListener("deviceready", function() {
         c += '</div>';
 
         $("#contFirstArticle").html(c);
+        $.mobile.loading( 'hide' );
     },
 
 
@@ -1196,6 +1206,7 @@ document.addEventListener("deviceready", function() {
         c += '</ul>';
 
         $("#contArticleList").html(c);
+        $.mobile.loading( 'hide' );
         $("#contArticleList .getContent").on("click", Index.showArticle);
     },
 
@@ -1418,6 +1429,7 @@ var Files = {
     },
 
     getFiles: function() {
+        $.mobile.loading( 'show' );
        // $("#myLog").append('REQUEST: user=' + Files.user + '&key=' + Files.key + '&fields=' + Files.fileFields + '&fieldsOff=' + Files.fileFieldsOff + '&time=' + Files.appTime);
         $.ajax({
             type: "POST",
@@ -1466,6 +1478,7 @@ var Files = {
         });
         c += '</div>';
         $("#contFileList").html(c);
+        $.mobile.loading( 'hide' );
         $("#fileList").collapsibleset();
 
 
@@ -1474,13 +1487,16 @@ var Files = {
     },
 
     onFile: function(e) {
+        $.mobile.loading( 'show' );
         var fileUrl = $(this).data('fileurl');
         var ext = fileUrl.split('.').pop();
         //open pdf and images in in ap browser - else in browser
         if(ext == 'jpg' || ext == 'png') {
+            $.mobile.loading( 'hide' );
             var ref = cordova.InAppBrowser.open(fileUrl, '_blank', 'location=no,closebuttoncaption=Lukk,enableViewportScale=yes');//_blank, _system
         }
         else {
+            $.mobile.loading( 'hide' );
             window.open(fileUrl, '_system');
         }
     }
@@ -1569,6 +1585,7 @@ var Info = {
     },
 
     getMessages: function() {
+        $.mobile.loading( 'show' );
         var fields = '';
         /*
          if(localStorage.getItem("art") && localStorage.getItem("art") != Index.currentSavedSettings) {
@@ -1701,6 +1718,7 @@ var Info = {
             c += '<div><button class="ui-btn removeMsg">Ok, meldingene er lest</button></div>';
         }
         $("#contMessages").html(c);
+        $.mobile.loading( 'hide' );
         //Remove msg - set as read
         $(".removeMsg").on("click", Info.resetUnreadMsg);
 
@@ -1779,7 +1797,7 @@ var Info = {
     },
 
     getArticle: function() {
-
+        $.mobile.loading( 'show' );
         $.ajax({
             type: "POST",
             url: localStorage.getItem('site') + '/moavaapi/info',
@@ -1886,7 +1904,7 @@ var Info = {
         $("#contArticle").html(c);
         $("#contImg").html(img);
         $("#contFiles").html(f);
-
+        $.mobile.loading( 'hide' );
         //add delete button to the end
         $("#contDeleteButton").html('<p><input type="button" id="btnDeleteArticle" value="Slett '+art.title+'" class="button  button-block button-dark edit" data-artid="'+ art.id+'" style="display:none;" /></p>');
         $(".filesCard").on("click", Files.onFile);
@@ -1964,13 +1982,12 @@ var Push = {
                 url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
                 data: 'endpointArn=' + currentEndpointArn + fields + '&user=' + user,
                 success: function(data) {
-
+                    $.mobile.loading( 'hide' );
                     if(localStorage.getItem('endpointArn'))
                     {
                         localStorage.removeItem('endpointArn');
                     }
                     localStorage.setItem('endpointArn', data[0].endpointArn);
-                    console.log('Mottat endpointArn: ' + data[0].endpointArn);
                     //if we have set fields, we reload with new settings
                     if(fields != '') {
                     //alert("Endpoint registered and now reloading: ");
