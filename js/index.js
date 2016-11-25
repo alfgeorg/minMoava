@@ -88,6 +88,8 @@ var app = {
 
         $("#messageContent").html(message);
         $.mobile.changePage('#dialogMessages');*/
+
+
     }
 };
 
@@ -1608,21 +1610,25 @@ var Info = {
     },
 
     findUrlsInText: function(text) {
-        text = text.replace(/&amp;/g, '&');
-        //var urls = text.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
         var urls = text.match(/(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g);
-        for (var i = 0, il = urls.length; i < il; i++) {
-            //Check if urls contain http
-            var url = urls[i];
-            if(!urls[i].match(/http/) && !urls[i].match(/mailto/)) url = 'http://' + urls[i];
-            //replace links with a-tags
-            text = text.replace(urls[i], '<a href="'+url+'">'+urls[i]+'</a>');
+        if(urls) {
+            text = text.replace(/&amp;/g, '&');
+            //var urls = text.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
+
+
+            for (var i = 0, il = urls.length; i < il; i++) {
+                //Check if urls contain http
+                var url = urls[i];
+                if (!urls[i].match(/http/) && !urls[i].match(/mailto/)) url = 'http://' + urls[i];
+                //replace links with a-tags
+                text = text.replace(urls[i], '<a href="' + url + '">' + urls[i] + '</a>');
+            }
         }
         return text;
     },
 
     getMessages: function() {
-
+        $.mobile.loading( 'show' );
         var fields = '';
         /*
          if(localStorage.getItem("art") && localStorage.getItem("art") != Index.currentSavedSettings) {
@@ -1673,7 +1679,7 @@ var Info = {
         }
         var allFields = JSON.stringify(fields);
 
-
+        //localStorage.setItem("endpointArn", 'arn:aws:sns:us-west-2:976398037860:endpoint/APNS_SANDBOX/PhonegapMinMoava/a53b197f-18cf-328c-a1ab-d01fdce3a9ca');
 
         if(localStorage.getItem("endpointArn")) {
 
@@ -1755,7 +1761,7 @@ var Info = {
             c += '<div><button class="ui-btn removeMsg">Ok, meldingene er lest</button></div>';
         }
         $("#contMessages").html(c);
-
+        $.mobile.loading( 'hide' );
         //Remove msg - set as read
         $(".removeMsg").on("click", Info.resetUnreadMsg);
 
@@ -1836,7 +1842,7 @@ var Info = {
     },
 
     getArticle: function() {
-
+        $.mobile.loading( 'show' );
         $.ajax({
             type: "POST",
             url: localStorage.getItem('site') + '/moavaapi/info',
@@ -1939,7 +1945,7 @@ var Info = {
         }
 
         c += '<a href="'+art.url+'&APP">Les på nettsted</a>';
-
+        $.mobile.loading( 'hide' );
         $("#contArticle").html(c);
         $("#contImg").html(img);
         $("#contFiles").html(f);
@@ -1978,7 +1984,7 @@ var Push = {
             },
             "windows": {}
         });
-        console.log('after init');
+
 
         /**
          * Register device registartion ID
