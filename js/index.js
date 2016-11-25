@@ -1622,7 +1622,7 @@ var Info = {
     },
 
     getMessages: function() {
-        $.mobile.loading( 'show' );
+
         var fields = '';
         /*
          if(localStorage.getItem("art") && localStorage.getItem("art") != Index.currentSavedSettings) {
@@ -1755,7 +1755,7 @@ var Info = {
             c += '<div><button class="ui-btn removeMsg">Ok, meldingene er lest</button></div>';
         }
         $("#contMessages").html(c);
-        $.mobile.loading( 'hide' );
+
         //Remove msg - set as read
         $(".removeMsg").on("click", Info.resetUnreadMsg);
 
@@ -1828,6 +1828,7 @@ var Info = {
                     $(".badge").html('');
                     $(".badge").css("display", "none");
                     Info.getMessages();
+                    $.mobile.loading( 'hide' );
                 },
                 dataType: 'json'
             });
@@ -2055,7 +2056,7 @@ var Push = {
          * data.message, data.count, data.sound
          */
         push.on('notification', function(data) {
-            console.log(data);
+
             //Show badge-number on tab Info
             Info.getNumberOfUnreadMessages(data.count);
             //update messages
