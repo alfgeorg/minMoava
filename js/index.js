@@ -503,8 +503,26 @@ var Settings = {
                     Settings.saveSettings('art');
                     Settings.saveSettings('file');
                     Settings.saveSettings('cal');
+
+
+                    //get all fields
+                    var fields = '';
+
+                    $(".chbSetting:checked").each(function(index, setting){
+                        fields += '&fields[]=' + $(setting).val();
+                    });
+                    //Are we logged in?
+                    var user = 0;
+                    if(localStorage.getItem('user'))
+                    {
+                        user = localStorage.getItem('user');
+                    }
+
+                    Settings.setPushSettings(fields, user);
+
+
                     //register device
-                    Push.setupPush();
+                   // Push.setupPush();
 
                     //save settings
 
@@ -531,6 +549,41 @@ var Settings = {
             }
 
 
+    },
+
+    setPushSettings: function(fields, user) {
+        //save the deviceToken / registration ID to your Push Notification Server
+        var currentEndpointArn = '';
+        if(localStorage.getItem('endpointArn'))
+        {
+            currentEndpointArn = localStorage.getItem('endpointArn');
+            //localStorage.removeItem('endpointArn');
+        }
+        $.ajax({
+            type: "POST",
+            url: Settings.site + '/moavaapi/pushregister/' + localStorage.getItem('registrationId'),
+            data: 'endpointArn=' + currentEndpointArn + fields + '&user=' + user,
+            success: function(data) {
+                if(currentEndpointArn != data[0].endpointArn)
+                {
+                    if(localStorage.getItem('site')) Settings.removeDevicePush(currentEndpointArn, localStorage.getItem('site'));
+                    localStorage.removeItem('endpointArn');
+
+                }
+                localStorage.setItem('endpointArn', data[0].endpointArn);
+                //if we have set fields, we reload with new settings
+                if(fields != '') {
+                    location.reload();
+                }
+            },
+            fail: function(response) {
+                //alert("Fail "+ response);
+            },
+            error: function(response) {
+                //alert("Fail "+ response);
+            },
+            dataType: 'json'
+        });
     },
 
     getSites: function() {
@@ -1991,61 +2044,16 @@ var Push = {
          * data.registrationId
          */
         push.on('registration', function(data) {
-           // $("#myLog").append('<p>DEVICE ID: '+ data.registrationId+'</p>');
-            console.log('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
-                // Post registrationId to your app server as the value has changed
             }
 
 
-            //save the deviceToken / registration ID to your Push Notification Server
-            var currentEndpointArn = '';
-            if(localStorage.getItem('endpointArn'))
-            {
-                currentEndpointArn = localStorage.getItem('endpointArn');
-                //localStorage.removeItem('endpointArn');
-            }
-            //get all fields
-            var fields = '';
 
-            $(".chbSetting:checked").each(function(index, setting){
-                    fields += '&fields[]=' + $(setting).val();
-            });
-            //Are we logged in?
-            var user = 0;
-            if(localStorage.getItem('user'))
-            {
-                user = localStorage.getItem('user');
-            }
-            //alert("Now pushregistering. URL: "+Settings.site + '/moavaapi/pushregister/' + data.registrationId+'POST: endpointArn=' + currentEndpointArn + fields + '&user=' + user);
-            $.ajax({
-                type: "POST",
-                url: Settings.site + '/moavaapi/pushregister/' + data.registrationId,
-                data: 'endpointArn=' + currentEndpointArn + fields + '&user=' + user,
-                success: function(data) {
-                    if(localStorage.getItem('endpointArn'))
-                    {
-                        localStorage.removeItem('endpointArn');
-                    }
-                    localStorage.setItem('endpointArn', data[0].endpointArn);
-                    //if we have set fields, we reload with new settings
-                    if(fields != '') {
-                    //alert("Endpoint registered and now reloading: ");
-                        location.reload();
-                    }
-                },
-                fail: function(response) {
-                    //alert("Fail "+ response);
-                },
-                error: function(response) {
-                    //alert("Fail "+ response);
-                },
-                dataType: 'json'
-            });
+            Settings.setPushSettings('', 0);
 
 
 
