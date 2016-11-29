@@ -1742,6 +1742,7 @@ var Info = {
         if(localStorage.getItem("endpointArn")) {
 
             var endpointArn = localStorage.getItem("endpointArn");
+            endpointArn = 'arn:aws:sns:us-west-2:976398037860:endpoint/APNS_SANDBOX/PhonegapMinMoava/fb03b679-3a3b-38a3-aee0-9a5437f5f091';//testing
             $.ajax({
                 type: "POST",
                 url: localStorage.getItem('site') + '/moavaapi/getpushmsg',
@@ -1799,13 +1800,17 @@ var Info = {
        // c += '<ul class="ui-listview" data-role="listview">';
         $.each(data, function(key, message)
         {
-            c += '<div class="ui-body ui-body-a ui-corner-all" style="margin-bottom:6px;">';
-            c += '<h5 class="ui-bar ui-bar-a ui-corner-all">'+message.msg.title+'</h5>';
-            c += '<p>';
-            c += Info.findUrlsInText(message.msg.msg);
-            c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span>';
-            c += '</p>';
-            c += '</div>';
+            var what = message.msg.what;
+                c += '<div class="ui-body ui-body-a ui-corner-all" style="margin-bottom:6px;">';
+            if(what == 'cal' || what == 'art' || what == 'file') c += '<a href="#dynamic" class="get'+what+' ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+message.msg.whatID+'" data-fileurl="'+message.msg.fileUrl+'" style="text-align:left;background-color:#FFFFFF;border:none;">';
+                c += '<h5 class="ui-bar ui-bar-a ui-corner-all">'+message.msg.title+'</h5>';
+                c += '<p>';
+                c += Info.findUrlsInText(message.msg.msg);
+                c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span>';
+                c += '</p>';
+            if(what == 'cal' || what == 'art' || what == 'file')  c += '</a>';
+                c += '</div>';
+
             /*
             c += '<li class="ui-field-contain ui-body ui-br ui-li ui-li-static ui-btn-up-c" data-role="fieldcontain">';
             c += '<label class="ui-btn-text contMsg" data-id="'+message.msg.whatID+'">'+message.msg.msg+' '+message.msg.msgID+' '+message.msg.what+' '+message.msg.whatID+' '+message.msg.fileUrl;
@@ -1820,6 +1825,20 @@ var Info = {
         }
         $("#contMessages").html(c);
         $.mobile.loading( 'hide' );
+
+        //listeners to what-elements like art, file, cal
+        $(".getcal").on("click", function(e) {
+            var eventID = $(this).data('id');
+            Cal.getEvents(eventID);
+
+        });
+        $(".getart").on("click", function(e) {
+            var artID = $(this).data('id');
+            Index.getArticles(artID);
+
+        });
+        $(".getfile").on("click", Files.onFile);
+
         //Remove msg - set as read
         $(".removeMsg").on("click", Info.resetUnreadMsg);
 
