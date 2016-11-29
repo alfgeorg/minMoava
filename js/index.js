@@ -292,20 +292,18 @@ var Cal = {
                 c += '<br>';
                 if(cal.timeTo != '' && cal.timeFrom == '') c += '- ';
                 c += cal.timeTo + '</span>';
-            if(cal.mainImg != '')
-            {
-                var imgSrc = cal.mainImg.imgUrl.small;
-                if(cal.mainImg.type == 'video')
-                {
-                    imgSrc = cal.mainImg.vidImg;
-                }
-                c += '<img src="' + imgSrc +'" width="90px;" style="float:left;margin-right:4px;"/>';
-            }
-
-
 
                 c += '<h2>'+cal.title+'</h2>';
                 c += '<p>'+cal.ingress+'</p>';
+                if(cal.mainImg != '')
+                {
+                    var imgSrc = cal.mainImg.imgUrl.small;
+                    if(cal.mainImg.type == 'video')
+                    {
+                        imgSrc = cal.mainImg.vidImg;
+                    }
+                    c += '<img src="' + imgSrc +'" width="90px;" style="float:left;margin-right:4px;"/>';
+                }
                 c += '</a>';
                 c += '</li>';
 
