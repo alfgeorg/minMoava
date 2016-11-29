@@ -302,7 +302,7 @@ var Cal = {
                     {
                         imgSrc = cal.mainImg.vidImg;
                     }
-                    c += '<img src="' + imgSrc +'" width="90px;" style="float:left;margin-right:4px;"/>';
+                    c += '<img src="' + imgSrc +'" width="120px" />';
                 }
                 c += '</a>';
                 c += '</li>';
