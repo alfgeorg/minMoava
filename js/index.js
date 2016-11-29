@@ -1803,12 +1803,15 @@ var Info = {
             var what = message.msg.what;
                 c += '<div class="ui-body ui-body-a ui-corner-all" style="margin-bottom:6px;">';
             if(what == 'cal' || what == 'art' || what == 'file') c += '<a href="#dynamic" class="get'+what+' ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+message.msg.whatID+'" data-fileurl="'+message.msg.fileUrl+'" style="text-align:left;background-color:#FFFFFF;border:none;">';
-                c += '<h5 class="ui-bar ui-bar-a ui-corner-all">'+message.msg.title+'</h5>';
+                c += '<h5 class="">';
+                c += message.msg.title;
+                c += '</h5>';
+            if(what == 'cal' || what == 'art' || what == 'file')  c += '</a>';
                 c += '<p>';
                 c += Info.findUrlsInText(message.msg.msg);
                 c += ' <span style="color:lightslategray;text-align:right;font-size: 80%;float:right;">'+message.msg.date+'</span>';
                 c += '</p>';
-            if(what == 'cal' || what == 'art' || what == 'file')  c += '</a>';
+
                 c += '</div>';
 
             /*
