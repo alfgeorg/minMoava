@@ -432,17 +432,17 @@ var Cal = {
             f = '<h4>Vedlegg</h4>';
 
             $.each(event.files, function(index, file){
-                f += '<div class="card filesCard" data-fileurl="'+file.fileUrl+'">';
-                f += '<div class="item item-divider">';
+                f += '<a class="filesCard ui-btn ui-btn-icon-right ui-icon-carat-r" data-fileurl="'+file.fileUrl+'" style="text-align:left;">';
+                f += '<h3>';
                 f += file.title;
-                f += '</div>';
+                f += '</h3>';
                 if(file.ingress != '')
                 {
-                    f += '<div class="item item-text-wrap">';
+                    f += '<p>';
                     f += file.ingress;
-                    f += '</div>';
+                    f += '</p>';
                 }
-                f += '</div>';
+                f += '</a>';
             });
 
         }
@@ -451,7 +451,7 @@ var Cal = {
         //$("#contEvent").html(c);
         //$("#contImg").html(img);
         //$("#contFiles").html(f);
-        var closeBtn = '<a href="#" class="ui-btn ui-icon-carat-l ui-btn-icon-left" data-rel="back">Tilbake</a>';
+        var closeBtn = '<a href="#" class="ui-btn ui-icon-carat-l ui-btn-icon-left" data-rel="back" style="margin-top:30px;">Tilbake</a>';
         /*$("#contArticle").html(c);
          $("#contImg").html(img);
          $("#contFiles").html(f);*/
@@ -1342,7 +1342,7 @@ document.addEventListener("deviceready", function() {
                 c += '<p>' + art.mainImg.ingress + '</p>';
             }
             c += '</div>';
-            c += '<p><input type="button" value="Slett ' + art.mainImg.title + '" class="btnDeleteImage button  button-block button-assertive edit" data-imageid="'+art.mainImg.id+'" style="display:none;" /></p>';
+           // c += '<p><input type="button" value="Slett ' + art.mainImg.title + '" class="btnDeleteImage button  button-block button-assertive edit" data-imageid="'+art.mainImg.id+'" style="display:none;" /></p>';
             mainImgID = art.mainImg.id;
         }
 
@@ -1373,7 +1373,7 @@ document.addEventListener("deviceready", function() {
                     img += '<p>' + oImg.ingress + '</p>';
                 }
                 img += '</div>';
-                img += '<p><input type="button" value="Slett ' + oImg.title + '" class="btnDeleteImage button  button-block button-assertive edit" data-imageid="'+oImg.id+'" style="display:none;" /></p>';
+                //img += '<p><input type="button" value="Slett ' + oImg.title + '" class="btnDeleteImage button  button-block button-assertive edit" data-imageid="'+oImg.id+'" style="display:none;" /></p>';
             }
         });
         img += '</div>';//end images
@@ -1386,33 +1386,34 @@ document.addEventListener("deviceready", function() {
             f = '<h4>Vedlegg</h4>';
 
             $.each(art.files, function(index, file){
-                f += '<div class="card filesCard" data-fileurl="'+file.fileUrl+'">';
-                f += '<div class="item item-divider">';
+                f += '<a class="filesCard ui-btn ui-btn-icon-right ui-icon-carat-r " data-fileurl="'+file.fileUrl+'">';
+                f += '<h3 class="">';
                 f += file.title;
-                f += '</div>';
+                f += '</h3>';
                 if(file.ingress != '')
                 {
-                    f += '<div class="item item-text-wrap">';
+                    f += '<p>';
                     f += file.ingress;
-                    f += '</div>';
+                    f += '</p>';
                 }
-                f += '</div>';
-                f += '<p><input type="button" value="Slett '+file.title+'" class="btnDeleteFile button  button-block button-assertive edit" data-fileid="'+ file.id+'" style="display:none;" /></p>';
+                f += '</a>';
+               // f += '<p><input type="button" value="Slett '+file.title+'" class="btnDeleteFile button  button-block button-assertive edit" data-fileid="'+ file.id+'" style="display:none;" /></p>';
             });
 
         }
         f += '</div>';
         //var end =  '<a href="'+art.url+'&APP">Les på nettsted</a>';
-        var closeBtn = '<a href="#" class="ui-btn ui-icon-carat-l ui-btn-icon-left" data-rel="back">Tilbake</a>';
+        var closeBtn = '<a href="#" class="ui-btn ui-icon-carat-l ui-btn-icon-left" data-rel="back" style=""margin-top:30px;">Tilbake</a>';
         /*$("#contArticle").html(c);
         $("#contImg").html(img);
         $("#contFiles").html(f);*/
         $("#contDynamic").html(c+img+f+closeBtn);
-/*
+        $(".filesCard").on("click", Files.onFile);
+
         //add delete button to the end
         $("#contDeleteButton").html('<p><input type="button" id="btnDeleteArticle" value="Slett '+art.title+'" class="button  button-block button-dark edit" data-artid="'+ art.id+'" style="display:none;" /></p>');
         $(".filesCard").on("click", Show.openFile);
-
+/*
         //edit
         $(".editText").on("blur", Show.onEditText);
         $(".btnDeleteImage").on("click", Show.onDeleteImage);
@@ -2010,17 +2011,17 @@ var Info = {
             f = '<h4>Vedlegg</h4>';
 
             $.each(art.files, function(index, file){
-                f += '<div class="card filesCard" data-fileurl="'+file.fileUrl+'">';
-                f += '<div class="item item-divider">';
+                f += '<a class="filesCard ui-btn ui-btn-icon-right ui-icon-carat-r" data-fileurl="'+file.fileUrl+'">';
+                f += '<h3>';
                 f += file.title;
-                f += '</div>';
+                f += '</h3>';
                 if(file.ingress != '')
                 {
-                    f += '<div class="item item-text-wrap">';
+                    f += '<p>';
                     f += file.ingress;
-                    f += '</div>';
+                    f += '</p>';
                 }
-                f += '</div>';
+                f += '</a>';
              //   f += '<p><input type="button" value="Slett '+file.title+'" class="btnDeleteFile button  button-block button-assertive edit" data-fileid="'+ file.id+'" style="display:none;" /></p>';
             });
 
