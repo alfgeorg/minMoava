@@ -1742,7 +1742,7 @@ var Info = {
         if(localStorage.getItem("endpointArn")) {
 
             var endpointArn = localStorage.getItem("endpointArn");
-            endpointArn = 'arn:aws:sns:us-west-2:976398037860:endpoint/APNS_SANDBOX/PhonegapMinMoava/fb03b679-3a3b-38a3-aee0-9a5437f5f091';//testing
+           // endpointArn = 'arn:aws:sns:us-west-2:976398037860:endpoint/APNS_SANDBOX/PhonegapMinMoava/fb03b679-3a3b-38a3-aee0-9a5437f5f091';//testing
             $.ajax({
                 type: "POST",
                 url: localStorage.getItem('site') + '/moavaapi/getpushmsg',
@@ -1802,8 +1802,10 @@ var Info = {
         {
             var what = message.msg.what;
                 c += '<div class="ui-body ui-body-a ui-corner-all" style="margin-bottom:6px;">';
-            if(what == 'cal' || what == 'art' || what == 'file') c += '<a href="#dynamic" class="get'+what+' ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+message.msg.whatID+'" data-fileurl="'+message.msg.fileUrl+'" style="text-align:left;background-color:#FFFFFF;border:none;">';
-                c += '<h5 class="">';
+            if(what == 'cal' || what == 'art' || what == 'file') c += '<a href="#dynamic" class="get'+what+' ui-btn ui-btn-icon-right ui-icon-carat-r" data-transition="slide" data-id="'+message.msg.whatID+'" data-fileurl="'+message.msg.fileUrl+'" >';
+                c += '<h5 style="text-align:left;" ';
+                if(what=="txt") c += 'class="ui-btn ui-corner-all"';
+                c += '>';
                 c += message.msg.title;
                 c += '</h5>';
             if(what == 'cal' || what == 'art' || what == 'file')  c += '</a>';
@@ -1824,7 +1826,7 @@ var Info = {
        // c += '</ul><br>';
 
         if(data.length) {
-            c += '<div><button class="ui-btn removeMsg">Ok, meldingene er lest</button></div>';
+            c += '<div><button class="ui-btn removeMsg" data-theme="b">Ok, meldingene er lest</button></div>';
         }
         $("#contMessages").html(c);
         $.mobile.loading( 'hide' );
