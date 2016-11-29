@@ -560,7 +560,7 @@ var Settings = {
             //localStorage.removeItem('endpointArn');
         }
 
-        alert("Set settings " + Settings.site + '/moavaapi/pushregister/' + localStorage.getItem('registrationId') + 'endpointArn=' + currentEndpointArn + fields + '&user=' + user);
+        //alert("Set settings " + Settings.site + '/moavaapi/pushregister/' + localStorage.getItem('registrationId') + 'endpointArn=' + currentEndpointArn + fields + '&user=' + user);
         $.ajax({
             type: "POST",
             url: Settings.site + '/moavaapi/pushregister/' + localStorage.getItem('registrationId'),
@@ -2055,9 +2055,6 @@ var Push = {
             if(localStorage.getItem('registrationId'))  localStorage.removeItem('registrationId');
 
             localStorage.setItem('registrationId', data.registrationId);
-
-
-alert("registrationID: " + localStorage.getItem('registrationId'));
 
             //Settings.setPushSettings('', 0);
 
