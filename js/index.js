@@ -871,13 +871,10 @@ var Settings = {
 
 
         var c = '';
-        c +=
-            c += '<ul class="list">';
+
         $.each(data, function(index, setting){
-            c += '<li class="item item-toggle">';
-            c += setting.title;
-            c += '<label class="toggle toggle-balanced">';
-            c+= '<input type="checkbox" value="'+setting.id+'" class="chbSetting chbSetting'+what+'" ';
+
+            c+= '<label><input type="checkbox" value="'+setting.id+'" class="chbSetting chbSetting'+what+'" ';
             //If set to on
             // $("#myLog").append('<li>'+setting.id+'>OFF: '+$.inArray(parseInt(setting.id), off)+' ON: '+$.inArray(parseInt(setting.id), on)+'</li>');
             if($.inArray(parseInt(setting.id), off) > -1)
@@ -890,12 +887,9 @@ var Settings = {
             }
             //if not exists in current setting (a new has been created on server), we set it to on
             //  if($.inArray(setting.id, selected.on) == -1 && $.inArray(setting.id, selected.off) == -1) c += 'checked="checked" ';
-            c += '>';
-            c += '<div class="track">';
-            c += '<div class="handle"></div>';
-            c += '</div>';
-            c += '</label>';
-            c += '</li>';
+            c += '> ';
+
+            c += setting.title+'</label>';
 
 
             //Calendars can set colors - Not for now - Need to know filedID - Not shure to use this..
@@ -908,7 +902,7 @@ var Settings = {
              }
              */
         });
-        c += '</ul>';
+        //c += '</ul>';
         return c;
     },
 
